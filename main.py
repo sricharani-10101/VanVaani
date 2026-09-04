@@ -25,7 +25,7 @@ from datetime import date
 
 # save/read files next to this script, no matter which folder we run it from
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, "..", "data")
+DATA_DIR = BASE_DIR
 INPUT_PATH = os.path.join(DATA_DIR, "fra_data.json")
 OUTPUT_PATH = os.path.join(DATA_DIR, "analytics.json")
 
