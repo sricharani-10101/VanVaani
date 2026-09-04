@@ -310,6 +310,6 @@ The data currently included in the repository is mock/sample data created for de
 
 Built as part of a hackathon project for:
 
-**PS-7 – AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring**
+**PROBLEM STATEMENT -7 – AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring**
 
 The project was developed by a student team with separate work on the anomaly detection and dashboard components.
