@@ -1,7 +1,5 @@
 {
   "meta": {
-    "project": "PS-7 - AI-powered Decision Support System for FRA Monitoring",
-    "prepared_by": "Team Member 2 - FRA Data & Analytics System",
     "based_on_file": "fra_data.json",
     "data_type": "SYNTHETIC / MOCK DATA - statistics calculated from it",
     "disclaimer": "This dataset is artificially generated using Python for hackathon prototype/demo purposes only. It does NOT represent real government FRA records."
