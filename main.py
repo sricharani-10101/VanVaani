@@ -1,3 +1,4 @@
+#map-system
 from data.generate_mock_claims import generate_claims, save_csv
 from scripts.build_map import build_map
 
