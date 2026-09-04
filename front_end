@@ -1,0 +1,77 @@
+<!-- map code -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>VanVaani - FRA Monitoring Map (Madhya Pradesh)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
+  #map { height: 100%; width: 100%; }
+  #title-bar {
+    position: absolute; top: 10px; left: 50px; z-index: 1000;
+    background: white; padding: 8px 14px; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3); font-size: 14px; max-width: 320px;
+  }
+  #title-bar h3 { margin: 0 0 4px 0; font-size: 16px; }
+  #title-bar .demo-note { color: #c62828; font-size: 12px; font-weight: bold; }
+  .legend {
+    position: absolute; bottom: 20px; right: 10px; z-index: 1000;
+    background: white; padding: 8px 12px; border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3); font-size: 12px;
+  }
+  .legend span { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; }
+</style>
+</head>
+<body>
+
+<div id="title-bar">
+  <h3>VanVaani - FRA Monitoring Map</h3>
+  Madhya Pradesh &middot; 15 districts
+  <div class="demo-note">DEMO MODE: claim data is SIMULATED</div>
+</div>
+
+<div class="legend">
+  <div><span style="background:#2e7d32;"></span> High approval rate (&ge;60%)</div>
+  <div><span style="background:#f9a825;"></span> Medium approval rate (40-59%)</div>
+  <div><span style="background:#c62828;"></span> Low approval rate (&lt;40%) - needs attention</div>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const markerData = [{"district": "Mandla", "lat": 22.6001, "lon": 80.3711, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 13, "pending": 18, "rejected": 9, "approval_rate_pct": 32.5, "avg_processing_days": 351.2}, {"district": "Dindori", "lat": 22.9432, "lon": 81.0788, "radius": 16.0, "color": "#f9a825", "total_claims": 40, "approved": 16, "pending": 16, "rejected": 8, "approval_rate_pct": 40.0, "avg_processing_days": 377.0}, {"district": "Balaghat", "lat": 21.8047, "lon": 80.1961, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 13, "pending": 22, "rejected": 5, "approval_rate_pct": 32.5, "avg_processing_days": 409.7}, {"district": "Seoni", "lat": 22.0864, "lon": 79.547, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 11, "pending": 24, "rejected": 5, "approval_rate_pct": 27.5, "avg_processing_days": 416.2}, {"district": "Chhindwara", "lat": 22.0574, "lon": 78.9382, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 13, "pending": 21, "rejected": 6, "approval_rate_pct": 32.5, "avg_processing_days": 530.7}, {"district": "Shahdol", "lat": 23.2967, "lon": 81.3546, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 9, "pending": 23, "rejected": 8, "approval_rate_pct": 22.5, "avg_processing_days": 395.7}, {"district": "Umaria", "lat": 23.525, "lon": 80.8322, "radius": 16.0, "color": "#f9a825", "total_claims": 40, "approved": 16, "pending": 20, "rejected": 4, "approval_rate_pct": 40.0, "avg_processing_days": 355.9}, {"district": "Anuppur", "lat": 23.1057, "lon": 81.6919, "radius": 16.0, "color": "#f9a825", "total_claims": 40, "approved": 19, "pending": 14, "rejected": 7, "approval_rate_pct": 47.5, "avg_processing_days": 478.0}, {"district": "Alirajpur", "lat": 22.3128, "lon": 74.3618, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 11, "pending": 23, "rejected": 6, "approval_rate_pct": 27.5, "avg_processing_days": 422.6}, {"district": "Jhabua", "lat": 22.7672, "lon": 74.5921, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 15, "pending": 20, "rejected": 5, "approval_rate_pct": 37.5, "avg_processing_days": 355.6}, {"district": "Barwani", "lat": 22.0333, "lon": 74.9, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 9, "pending": 25, "rejected": 6, "approval_rate_pct": 22.5, "avg_processing_days": 458.3}, {"district": "Betul", "lat": 21.9022, "lon": 77.8977, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 12, "pending": 19, "rejected": 9, "approval_rate_pct": 30.0, "avg_processing_days": 403.4}, {"district": "Sidhi", "lat": 24.4167, "lon": 81.8833, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 14, "pending": 20, "rejected": 6, "approval_rate_pct": 35.0, "avg_processing_days": 355.8}, {"district": "Singrauli", "lat": 24.1997, "lon": 82.6752, "radius": 16.0, "color": "#f9a825", "total_claims": 40, "approved": 16, "pending": 21, "rejected": 3, "approval_rate_pct": 40.0, "avg_processing_days": 400.5}, {"district": "Panna", "lat": 24.7175, "lon": 80.1836, "radius": 16.0, "color": "#c62828", "total_claims": 40, "approved": 12, "pending": 22, "rejected": 6, "approval_rate_pct": 30.0, "avg_processing_days": 453.7}];
+
+  const map = L.map('map').setView([23.0, 79.5], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 12,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  markerData.forEach(function(d) {
+    const popupHtml =
+      "<b>" + d.district + "</b><br>" +
+      "Total Claims: " + d.total_claims + "<br>" +
+      "Approved: " + d.approved + "<br>" +
+      "Pending: " + d.pending + "<br>" +
+      "Rejected: " + d.rejected + "<br>" +
+      "Approval Rate: " + d.approval_rate_pct + "%<br>" +
+      "Avg. Processing Time: " + (d.avg_processing_days ?? "N/A") + " days";
+
+    L.circleMarker([d.lat, d.lon], {
+      radius: d.radius,
+      color: d.color,
+      fillColor: d.color,
+      fillOpacity: 0.7,
+      weight: 2
+    }).addTo(map)
+      .bindPopup(popupHtml)
+      .bindTooltip(d.district);
+  });
+</script>
+
+</body>
+</html>
