@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "project": "PS-7 - AI-powered Decision Support System for FRA Monitoring",
+    "prepared_by": "Team Member 2 - FRA Data & Analytics System",
+    "based_on_file": "fra_data.json",
+    "data_type": "SYNTHETIC / MOCK DATA - statistics calculated from it",
+    "disclaimer": "This dataset is artificially generated using Python for hackathon prototype/demo purposes only. It does NOT represent real government FRA records."
+  },
+  "overall": {
+    "total_claims": 450,
+    "approved_claims": 249,
+    "pending_claims": 129,
+    "rejected_claims": 72,
+    "approval_percentage": 55.33,
+    "pending_percentage": 28.67,
+    "rejected_percentage": 16.0,
+    "average_processing_time_days": 410.8
+  },
+  "state_wise": {
+    "Madhya Pradesh": {
+      "total_claims": 450,
+      "approved_claims": 249,
+      "pending_claims": 129,
+      "rejected_claims": 72,
+      "approval_percentage": 55.33,
+      "pending_percentage": 28.67,
+      "rejected_percentage": 16.0,
+      "average_processing_time_days": 410.8
+    }
+  },
+  "district_wise": {
+    "Mandla": {
+      "total_claims": 30,
+      "approved_claims": 16,
+      "pending_claims": 10,
+      "rejected_claims": 4,
+      "approval_percentage": 53.33,
+      "pending_percentage": 33.33,
+      "rejected_percentage": 13.33,
+      "average_processing_time_days": 377.6
+    },
+    "Dindori": {
+      "total_claims": 30,
+      "approved_claims": 15,
+      "pending_claims": 10,
+      "rejected_claims": 5,
+      "approval_percentage": 50.0,
+      "pending_percentage": 33.33,
+      "rejected_percentage": 16.67,
+      "average_processing_time_days": 351.9
+    },
+    "Balaghat": {
+      "total_claims": 30,
+      "approved_claims": 13,
+      "pending_claims": 12,
+      "rejected_claims": 5,
+      "approval_percentage": 43.33,
+      "pending_percentage": 40.0,
+      "rejected_percentage": 16.67,
+      "average_processing_time_days": 457.0
+    },
+    "Seoni": {
+      "total_claims": 30,
+      "approved_claims": 15,
+      "pending_claims": 8,
+      "rejected_claims": 7,
+      "approval_percentage": 50.0,
+      "pending_percentage": 26.67,
+      "rejected_percentage": 23.33,
+      "average_processing_time_days": 457.3
+    },
+    "Chhindwara": {
+      "total_claims": 30,
+      "approved_claims": 16,
+      "pending_claims": 10,
+      "rejected_claims": 4,
+      "approval_percentage": 53.33,
+      "pending_percentage": 33.33,
+      "rejected_percentage": 13.33,
+      "average_processing_time_days": 468.4
+    },
+    "Shahdol": {
+      "total_claims": 30,
+      "approved_claims": 15,
+      "pending_claims": 7,
+      "rejected_claims": 8,
+      "approval_percentage": 50.0,
+      "pending_percentage": 23.33,
+      "rejected_percentage": 26.67,
+      "average_processing_time_days": 376.9
+    },
+    "Umaria": {
+      "total_claims": 30,
+      "approved_claims": 16,
+      "pending_claims": 5,
+      "rejected_claims": 9,
+      "approval_percentage": 53.33,
+      "pending_percentage": 16.67,
+      "rejected_percentage": 30.0,
+      "average_processing_time_days": 447.2
+    },
+    "Anuppur": {
+      "total_claims": 30,
+      "approved_claims": 18,
+      "pending_claims": 9,
+      "rejected_claims": 3,
+      "approval_percentage": 60.0,
+      "pending_percentage": 30.0,
+      "rejected_percentage": 10.0,
+      "average_processing_time_days": 481.3
+    },
+    "Alirajpur": {
+      "total_claims": 30,
+      "approved_claims": 22,
+      "pending_claims": 3,
+      "rejected_claims": 5,
+      "approval_percentage": 73.33,
+      "pending_percentage": 10.0,
+      "rejected_percentage": 16.67,
+      "average_processing_time_days": 383.8
+    },
+    "Jhabua": {
+      "total_claims": 30,
+      "approved_claims": 19,
+      "pending_claims": 7,
+      "rejected_claims": 4,
+      "approval_percentage": 63.33,
+      "pending_percentage": 23.33,
+      "rejected_percentage": 13.33,
+      "average_processing_time_days": 399.4
+    },
+    "Barwani": {
+      "total_claims": 30,
+      "approved_claims": 19,
+      "pending_claims": 8,
+      "rejected_claims": 3,
+      "approval_percentage": 63.33,
+      "pending_percentage": 26.67,
+      "rejected_percentage": 10.0,
+      "average_processing_time_days": 409.8
+    },
+    "Betul": {
+      "total_claims": 30,
+      "approved_claims": 12,
+      "pending_claims": 12,
+      "rejected_claims": 6,
+      "approval_percentage": 40.0,
+      "pending_percentage": 40.0,
+      "rejected_percentage": 20.0,
+      "average_processing_time_days": 408.3
+    },
+    "Sidhi": {
+      "total_claims": 30,
+      "approved_claims": 14,
+      "pending_claims": 11,
+      "rejected_claims": 5,
+      "approval_percentage": 46.67,
+      "pending_percentage": 36.67,
+      "rejected_percentage": 16.67,
+      "average_processing_time_days": 386.0
+    },
+    "Singrauli": {
+      "total_claims": 30,
+      "approved_claims": 21,
+      "pending_claims": 8,
+      "rejected_claims": 1,
+      "approval_percentage": 70.0,
+      "pending_percentage": 26.67,
+      "rejected_percentage": 3.33,
+      "average_processing_time_days": 387.0
+    },
+    "Panna": {
+      "total_claims": 30,
+      "approved_claims": 18,
+      "pending_claims": 9,
+      "rejected_claims": 3,
+      "approval_percentage": 60.0,
+      "pending_percentage": 30.0,
+      "rejected_percentage": 10.0,
+      "average_processing_time_days": 386.6
+    }
+  }
+}
