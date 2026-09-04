@@ -313,3 +313,148 @@ Built as part of a hackathon project for:
 **PROBLEM STATEMENT -7 – AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring**
 
 The project was developed by a student team with separate work on the anomaly detection and dashboard components.
+
+(shivani)
+
+FRA Data & Analytics System
+Part of PS-7: AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring.
+This module is independent — it does not need the map, AI, or dashboard code to run.
+It only produces two files that the rest of the team plugs into their systems:
+File	Produced by	Used by
+`data/fra_data.json`	`scripts/generate_fra_data.py`	Member 1 (GIS/Map) and Member 3 (AI Anomaly Detection)
+`data/analytics.json`	`scripts/analytics.py`	Member 4 (Decision Support Dashboard)
+---
+⚠️ About the data (read this before your demo)
+This is mock / synthetic data, generated with Python's `random` module — not
+copied from a real dataset, not hand-typed fake numbers. Real, claim-level FRA
+data isn't publicly available in a usable format, so we generate realistic
+placeholder data instead.
+Both output files clearly say `"data_type": "SYNTHETIC / MOCK DATA"` and
+carry a disclaimer. When you present, say clearly: "This is a working
+prototype using programmatically generated mock data, standing in for real
+government data until it's integrated." That keeps you fully clear of the
+hackathon's disqualification rule about presenting fake data as if it were
+live/real.
+---
+Folder structure
+```
+fra-data-analytics/
+├── README.md
+├── requirements.txt
+├── scripts/
+│   ├── generate_fra_data.py   # creates data/fra_data.json
+│   └── analytics.py           # reads fra_data.json, creates data/analytics.json
+└── data/
+    ├── fra_data.json          # 450 mock claims (15 MP districts x 30 claims)
+    └── analytics.json         # calculated statistics
+```
+---
+Data schema (what's inside `fra_data.json`)
+Each of the 450 claims looks like this:
+```json
+{
+  "claim_id": "MP-MAN-0001",
+  "state": "Madhya Pradesh",
+  "district": "Mandla",
+  "claim_date": "2012-07-01",
+  "approval_date": "2013-03-16",
+  "status": "Approved",
+  "land_area_hectares": 0.99,
+  "forest_area_hectares": 0.86,
+  "applicant_type": "Individual"
+}
+```
+`status` is one of `"Approved"`, `"Pending"`, `"Rejected"`.
+`approval_date` is only filled in for `"Approved"` claims — otherwise it's `null`.
+`applicant_type` is `"Individual"` (IFR-style, small plot) or `"Community"` (CFR-style, larger area).
+`analytics.json` contains three sections: `overall` (all 450 claims), `state_wise`
+(currently just Madhya Pradesh), and `district_wise` (all 15 districts) — each with
+the same set of numbers: total/approved/pending/rejected claims, approval %,
+pending %, rejected %, and average processing time in days.
+---
+Step-by-step roadmap (beginner-friendly)
+Step 1 — Get your tools ready
+Install Python 3 if you don't already have it: https://www.python.org/downloads/
+Install a code editor: https://code.visualstudio.com/ (VS Code — free, beginner-friendly)
+Install Git (needed to push to GitHub): https://git-scm.com/downloads
+Make a free GitHub account if you don't have one: https://github.com/
+No other installs are needed — both scripts use only Python's built-in
+libraries (`json`, `random`, `datetime`, `os`, `collections`). Nothing to
+`pip install`.
+Step 2 — Get the files onto your laptop
+Download the files below and put them in a folder exactly like the structure
+shown above (`scripts/` and `data/` as sibling folders).
+Step 3 — Run the data generator
+Open a terminal (VS Code has one built in: Terminal → New Terminal), go into
+the `scripts` folder, and run:
+```bash
+cd scripts
+python generate_fra_data.py
+```
+You should see:
+```
+Done! 450 mock FRA claims saved to: .../data/fra_data.json
+```
+Step 4 — Run the analytics script
+Still inside `scripts/`, run:
+```bash
+python analytics.py
+```
+You should see something like:
+```
+Done! Analytics saved to: .../data/analytics.json
+Total claims analyzed: 450
+Approved: 249 (55.33%)
+Pending:  129 (28.67%)
+Rejected: 72 (16.0%)
+```
+Step 5 — Check the output
+Open `data/fra_data.json` and `data/analytics.json` in VS Code (or drag them
+into https://jsonformatter.org/json-viewer) and just skim through — make sure
+the numbers look sensible and every district shows up.
+Step 6 — Push to GitHub
+From the top-level project folder (the one with `README.md` in it):
+```bash
+git init                       # only if this repo isn't already a git repo
+git add .
+git commit -m "Add FRA mock data generator and analytics scripts (Member 2)"
+git branch -M main
+git remote add origin <your-team-repo-URL>
+git push -u origin main
+```
+If your team already has a shared repo, instead do:
+```bash
+git checkout -b member2-data-analytics
+git add .
+git commit -m "Add FRA mock data generator and analytics scripts (Member 2)"
+git push -u origin member2-data-analytics
+```
+...then open a Pull Request on GitHub so your teammates can review and merge it.
+Step 7 — Hand off to your teammates
+Tell them:
+Member 1 (Map): load `data/fra_data.json`, plot claims by `district` — you'll
+probably want to add real district boundary shapes from Bhuvan
+(https://bhuvan.nrsc.gov.in) or Natural Earth (https://www.naturalearthdata.com)
+and match them by district name.
+Member 3 (AI anomaly detection): `status`, `claim_date`, and `approval_date`
+in `fra_data.json` are enough to flag things like "pending for a very long time"
+or "processing time much higher than the district average" (which you can pull
+straight from `analytics.json`).
+Member 4 (Dashboard): `analytics.json` already has everything pre-calculated
+— `overall`, `state_wise`, and `district_wise` — so the dashboard just needs to
+read and display it, no extra math needed.
+Step 8 (optional, if you have extra time)
+Swap the random `land_area`/`forest_area` ranges for numbers based on real FRA
+reports you find on https://tribal.nic.in (Ministry of Tribal Affairs) or
+https://data.gov.in, so the mock data is grounded in real-world ranges.
+Add a command-line option to `generate_fra_data.py` (e.g. `--seed 7`) so
+teammates can generate a different sample set for testing.
+Add unit tests with Python's built-in `unittest` to check that percentages
+always add up to (roughly) 100%.
+---
+Why this won't trip the "fake data as live results" rule
+The data is generated by a script you can show anyone, not hand-typed —
+anyone can re-run `generate_fra_data.py` and see how it works.
+Every output file says in plain text that it is synthetic/mock data.
+In your pitch, always describe it as "a working prototype demonstrated on
+realistic mock data" — never as real claim records.
