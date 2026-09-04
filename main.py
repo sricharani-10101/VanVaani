@@ -60,7 +60,6 @@ def random_date(start, end):
     total_days = (end - start).days
     return start + timedelta(days=random.randint(0, total_days))
 
-
 def make_claim(district, serial_number):
     """Build ONE mock FRA claim and return it as a dictionary."""
 
@@ -99,7 +98,6 @@ def make_claim(district, serial_number):
         "applicant_type": applicant_type,
     }
 
-
 def generate_all_claims():
     """Create CLAIMS_PER_DISTRICT claims for every district in the list."""
     all_claims = []
@@ -107,11 +105,6 @@ def generate_all_claims():
         for serial_number in range(1, CLAIMS_PER_DISTRICT + 1):
             all_claims.append(make_claim(district, serial_number))
     return all_claims
-
-
-# -----------------------------------------------------------------------
-# 3. MAIN
-# -----------------------------------------------------------------------
 
 def main():
     claims = generate_all_claims()
@@ -134,8 +127,6 @@ def main():
         "claims": claims,
     }
 
-    # save the file next to this script, inside ../data/, no matter which
-    # folder we happen to run this script from
     base_dir = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(base_dir, "..", "data")
     os.makedirs(data_dir, exist_ok=True)
