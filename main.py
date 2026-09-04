@@ -17,7 +17,7 @@ def run():
 if __name__ == "__main__":
     run()
 
-#FRA Data and Analytics
+#FRA Analytics
 import json
 import os
 from collections import defaultdict
@@ -129,6 +129,154 @@ def main():
           f"({overall_stats['pending_percentage']}%)")
     print(f"Rejected: {overall_stats['rejected_claims']} "
           f"({overall_stats['rejected_percentage']}%)")
+
+
+if __name__ == "__main__":
+    main()
+
+# FRA Data
+import json
+import os
+import random
+from datetime import date, timedelta
+
+# -----------------------------------------------------------------------
+# 1. SETTINGS  (change these numbers if you want to experiment)
+# -----------------------------------------------------------------------
+
+random.seed(42)
+# ^ using a fixed "seed" means we get the SAME random data every time we run
+#   this script. That makes our demo reproducible - useful when showing the
+#   project to judges or teammates. Remove this line if you want fresh
+#   random data on every run.
+
+STATE_NAME = "Madhya Pradesh"
+CLAIMS_PER_DISTRICT = 30
+
+# district name -> short 3-letter code used inside each Claim ID
+DISTRICTS = {
+    "Mandla": "MAN",
+    "Dindori": "DIN",
+    "Balaghat": "BAL",
+    "Seoni": "SEO",
+    "Chhindwara": "CHH",
+    "Shahdol": "SHA",
+    "Umaria": "UMA",
+    "Anuppur": "ANU",
+    "Alirajpur": "ALI",
+    "Jhabua": "JHA",
+    "Barwani": "BAR",
+    "Betul": "BET",
+    "Sidhi": "SID",
+    "Singrauli": "SIN",
+    "Panna": "PAN",
+}
+
+STATUSES = ["Approved", "Pending", "Rejected"]
+STATUS_WEIGHTS = [0.55, 0.30, 0.15]  # 55% approved, 30% pending, 15% rejected
+
+APPLICANT_TYPES = ["Individual", "Community"]
+APPLICANT_WEIGHTS = [0.7, 0.3]  # individual claims (IFR) are more common than
+                                # community claims (CFR) in real FRA data
+
+CLAIM_START_DATE = date(2010, 1, 1)
+CLAIM_END_DATE = date(2023, 12, 31)
+
+
+# -----------------------------------------------------------------------
+# 2. HELPER FUNCTIONS
+# -----------------------------------------------------------------------
+
+def random_date(start, end):
+    """Pick a random date between start and end (both included)."""
+    total_days = (end - start).days
+    return start + timedelta(days=random.randint(0, total_days))
+
+
+def make_claim(district, serial_number):
+    """Build ONE mock FRA claim and return it as a dictionary."""
+
+    code = DISTRICTS[district]
+    claim_id = f"MP-{code}-{serial_number:04d}"
+
+    claim_date = random_date(CLAIM_START_DATE, CLAIM_END_DATE)
+    status = random.choices(STATUSES, weights=STATUS_WEIGHTS, k=1)[0]
+    applicant_type = random.choices(APPLICANT_TYPES, weights=APPLICANT_WEIGHTS, k=1)[0]
+
+    # only an APPROVED claim has an approval date
+    if status == "Approved":
+        processing_days = random.randint(30, 730)  # 1 month to ~2 years
+        approval_date = claim_date + timedelta(days=processing_days)
+    else:
+        approval_date = None
+
+    # individual claims are usually small plots, community claims are larger
+    if applicant_type == "Individual":
+        land_area = round(random.uniform(0.5, 4.0), 2)
+    else:
+        land_area = round(random.uniform(5.0, 150.0), 2)
+
+    # the forest area is usually close to (but not more than) the land area
+    forest_area = round(land_area * random.uniform(0.85, 1.0), 2)
+
+    return {
+        "claim_id": claim_id,
+        "state": STATE_NAME,
+        "district": district,
+        "claim_date": claim_date.isoformat(),
+        "approval_date": approval_date.isoformat() if approval_date else None,
+        "status": status,
+        "land_area_hectares": land_area,
+        "forest_area_hectares": forest_area,
+        "applicant_type": applicant_type,
+    }
+
+
+def generate_all_claims():
+    """Create CLAIMS_PER_DISTRICT claims for every district in the list."""
+    all_claims = []
+    for district in DISTRICTS:
+        for serial_number in range(1, CLAIMS_PER_DISTRICT + 1):
+            all_claims.append(make_claim(district, serial_number))
+    return all_claims
+
+
+# -----------------------------------------------------------------------
+# 3. MAIN
+# -----------------------------------------------------------------------
+
+def main():
+    claims = generate_all_claims()
+
+    output = {
+        "meta": {
+            "project": "PS-7 - AI-powered Decision Support System for FRA Monitoring",
+            "prepared_by": "Team Member 2 - FRA Data & Analytics System",
+            "state": STATE_NAME,
+            "total_districts": len(DISTRICTS),
+            "claims_per_district": CLAIMS_PER_DISTRICT,
+            "total_claims": len(claims),
+            "data_type": "SYNTHETIC / MOCK DATA",
+            "disclaimer": (
+                "This dataset is artificially generated using Python for "
+                "hackathon prototype/demo purposes only. It does NOT "
+                "represent real government FRA records."
+            ),
+        },
+        "claims": claims,
+    }
+
+    # save the file next to this script, inside ../data/, no matter which
+    # folder we happen to run this script from
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
+    os.makedirs(data_dir, exist_ok=True)
+    output_path = os.path.join(data_dir, "fra_data.json")
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+
+    print(f"Done! {len(claims)} mock FRA claims saved to: {output_path}")
 
 
 if __name__ == "__main__":
