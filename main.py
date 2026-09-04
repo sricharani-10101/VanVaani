@@ -22,17 +22,7 @@ import json
 import os
 import random
 from datetime import date, timedelta
-
-# -----------------------------------------------------------------------
-# 1. SETTINGS  (change these numbers if you want to experiment)
-# -----------------------------------------------------------------------
-
 random.seed(42)
-# ^ using a fixed "seed" means we get the SAME random data every time we run
-#   this script. That makes our demo reproducible - useful when showing the
-#   project to judges or teammates. Remove this line if you want fresh
-#   random data on every run.
-
 STATE_NAME = "Madhya Pradesh"
 CLAIMS_PER_DISTRICT = 30
 
@@ -64,11 +54,6 @@ APPLICANT_WEIGHTS = [0.7, 0.3]  # individual claims (IFR) are more common than
 
 CLAIM_START_DATE = date(2010, 1, 1)
 CLAIM_END_DATE = date(2023, 12, 31)
-
-
-# -----------------------------------------------------------------------
-# 2. HELPER FUNCTIONS
-# -----------------------------------------------------------------------
 
 def random_date(start, end):
     """Pick a random date between start and end (both included)."""
