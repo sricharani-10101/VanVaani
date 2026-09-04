@@ -316,25 +316,15 @@ The project was developed by a student team with separate work on the anomaly de
 
 (shivani)
 
-FRA Data & Analytics System
-Part of PS-7: AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring.
+## FRA Data & Analytics System
 This module is independent — it does not need the map, AI, or dashboard code to run.
-It only produces two files that the rest of the team plugs into their systems:
-File	Produced by	Used by
-`data/fra_data.json`	`scripts/generate_fra_data.py`	Member 1 (GIS/Map) and Member 3 (AI Anomaly Detection)
-`data/analytics.json`	`scripts/analytics.py`	Member 4 (Decision Support Dashboard)
 ---
-⚠️ About the data (read this before your demo)
 This is mock / synthetic data, generated with Python's `random` module — not
 copied from a real dataset, not hand-typed fake numbers. Real, claim-level FRA
 data isn't publicly available in a usable format, so we generate realistic
 placeholder data instead.
 Both output files clearly say `"data_type": "SYNTHETIC / MOCK DATA"` and
-carry a disclaimer. When you present, say clearly: "This is a working
-prototype using programmatically generated mock data, standing in for real
-government data until it's integrated." That keeps you fully clear of the
-hackathon's disqualification rule about presenting fake data as if it were
-live/real.
+carry a disclaimer. This is a working prototype using programmatically generated mock data, standing in for real government data until it's integrated.
 ---
 Folder structure
 ```
