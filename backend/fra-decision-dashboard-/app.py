@@ -1,6 +1,3 @@
-"""
-PS-7 FRA Monitoring — Decision Support Dashboard
-
 Reads THREE files (all produced by the other project modules, or by the
 bundled fallback generators in this repo if those files aren't ready yet):
 
@@ -56,10 +53,6 @@ SEVERITY_COLOR = {"HIGH": "#e74c3c", "MEDIUM": "#f39c12", "LOW": "#f1c40f"}
 SEVERITY_EMOJI = {"HIGH": "🔴", "MEDIUM": "🟠", "LOW": "🟡"}
 
 
-# ---------------------------------------------------------------------------
-# Data loading + fallback generation
-# ---------------------------------------------------------------------------
-
 @st.cache_data(show_spinner=False)
 def load_json(path):
     with open(path) as f:
@@ -67,14 +60,7 @@ def load_json(path):
 
 
 def ensure_data_files():
-    """
-    If the real files from the data generation / anomaly detection modules
-    aren't in data/ yet, generate compatible ones so the dashboard still
-    runs. fra_data.json and analytics.json are generated using the data
-    generation module's OWN scripts, unmodified (bundled in this repo), so
-    the fallback is guaranteed to match the real contract exactly — no
-    separate mock format to keep in sync.
-    """
+   
     os.makedirs(DATA_DIR, exist_ok=True)
 
     if not os.path.exists(FRA_DATA_PATH):
@@ -106,12 +92,7 @@ def ensure_data_files():
 
 
 def summarize_anomalies(anomalies):
-    """
-    analytics.json has no concept of anomalies (that's a separate anomaly
-    detection module). This computes state/district/severity/type
-    breakdowns directly from anomalies.json so the dashboard can merge them
-    with the data generation module's approved/pending/rejected numbers.
-    """
+   
     by_state = defaultdict(int)
     by_district = defaultdict(int)
     by_severity = defaultdict(int)
@@ -122,11 +103,6 @@ def summarize_anomalies(anomalies):
         by_severity[a["severity"]] += 1
         by_type[a["type"]] += 1
     return by_state, by_district, by_severity, by_type
-
-
-# ---------------------------------------------------------------------------
-# Page
-# ---------------------------------------------------------------------------
 
 st.set_page_config(page_title="FRA Monitoring — Decision Support", layout="wide")
 ensure_data_files()
@@ -146,10 +122,6 @@ disclaimer = analytics.get("meta", {}).get("disclaimer")
 if disclaimer:
     st.info(disclaimer, icon="ℹ️")
 
-# ---------------------------------------------------------------------------
-# 1. KPI cards
-# ---------------------------------------------------------------------------
-
 overall = analytics["overall"]
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Claims", f"{overall['total_claims']:,}")
@@ -158,12 +130,6 @@ col3.metric("Pending", f"{overall['pending_claims']:,}")
 col4.metric("Anomalies", f"{len(anomalies):,}")
 
 st.divider()
-
-# ---------------------------------------------------------------------------
-# 2. State-wise / district-wise comparison tables
-#    (data generation module's stats merged with anomaly detection module's
-#    counts)
-# ---------------------------------------------------------------------------
 
 def build_summary_rows(wise_dict, is_district, state_lookup=None):
     rows = []
@@ -215,10 +181,6 @@ with district_tab:
 
 st.divider()
 
-# ---------------------------------------------------------------------------
-# 3. Charts
-# ---------------------------------------------------------------------------
-
 st.subheader("Charts")
 chart_col1, chart_col2 = st.columns(2)
 
@@ -264,10 +226,6 @@ st.caption(f"Average processing time: **{overall['average_processing_time_days']
            f"(across all approved claims, per the data generation module's analytics).")
 
 st.divider()
-
-# ---------------------------------------------------------------------------
-# 4. Anomaly panel + 5. Claim detail view
-# ---------------------------------------------------------------------------
 
 st.subheader("Anomaly Panel")
 
