@@ -1,16 +1,17 @@
 """
-PS-7 FRA Monitoring — Member 4: Decision Support Dashboard
+PS-7 FRA Monitoring — Decision Support Dashboard
 
-Reads THREE files (all produced by teammates, or by the bundled fallback
-generators in this repo if teammates' files aren't ready yet):
+Reads THREE files (all produced by the other project modules, or by the
+bundled fallback generators in this repo if those files aren't ready yet):
 
-  data/fra_data.json   <- Member 2. Shape: {"meta": {...}, "claims": [...]}
+  data/fra_data.json   <- produced by the data generation module. Shape:
+                          {"meta": {...}, "claims": [...]}
                           Used here only to enrich the claim-detail view
                           (land_area_hectares, forest_area_hectares,
                           applicant_type) — the KPIs/tables/charts don't
                           need it.
 
-  data/analytics.json  <- Member 2. Shape:
+  data/analytics.json  <- produced by the data generation module. Shape:
                           {
                             "meta": {...},
                             "overall": {total_claims, approved_claims,
@@ -22,11 +23,12 @@ generators in this repo if teammates' files aren't ready yet):
                             "district_wise": {"Mandla": {...same shape...}, ...}
                           }
                           Note: this file has NO anomaly information in it —
-                          that's Member 3's job, not Member 2's. This
-                          dashboard merges the two itself (see
-                          summarize_anomalies() below).
+                          that's the anomaly detection module's job, not the
+                          data generation module's. This dashboard merges the
+                          two itself (see summarize_anomalies() below).
 
-  data/anomalies.json  <- Member 3. A flat list of:
+  data/anomalies.json  <- produced by the anomaly detection module. A flat
+                          list of:
                           {claim_id, state, district, severity, risk_score,
                            type, explanation, recommendation}
                           type is one of: DELAYED_CLAIM, LAND_FOREST_MISMATCH,
@@ -66,17 +68,18 @@ def load_json(path):
 
 def ensure_data_files():
     """
-    If the real files from Member 2 / Member 3 aren't in data/ yet, generate
-    compatible ones so the dashboard still runs. fra_data.json and
-    analytics.json are generated using Member 2's OWN scripts, unmodified
-    (bundled in this repo), so the fallback is guaranteed to match the real
-    contract exactly — no separate mock format to keep in sync.
+    If the real files from the data generation / anomaly detection modules
+    aren't in data/ yet, generate compatible ones so the dashboard still
+    runs. fra_data.json and analytics.json are generated using the data
+    generation module's OWN scripts, unmodified (bundled in this repo), so
+    the fallback is guaranteed to match the real contract exactly — no
+    separate mock format to keep in sync.
     """
     os.makedirs(DATA_DIR, exist_ok=True)
 
     if not os.path.exists(FRA_DATA_PATH):
         script = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                               "scripts_member2", "generate_fra_data.py")
+                               "scripts_data_generator", "generate_fra_data.py")
         subprocess.run([sys.executable, script], check=True)
 
     if not os.path.exists(ANALYTICS_PATH):
@@ -85,8 +88,9 @@ def ensure_data_files():
 
     if not os.path.exists(ANOMALIES_PATH):
         # Minimal built-in fallback so the anomaly panel isn't empty before
-        # Member 3's real anomalies.json is dropped in. Matches Member 3's
-        # actual output contract exactly (including the real district names).
+        # the anomaly detection module's real anomalies.json is dropped in.
+        # Matches that module's actual output contract exactly (including
+        # the real district names).
         mock_anomalies = [
             {"claim_id": "MP-SEO-0012", "state": "Madhya Pradesh", "district": "Seoni",
              "severity": "MEDIUM", "risk_score": 55, "type": "DELAYED_CLAIM",
@@ -103,10 +107,10 @@ def ensure_data_files():
 
 def summarize_anomalies(anomalies):
     """
-    Member 2's analytics.json has no concept of anomalies (that's Member 3's
-    module). This computes state/district/severity/type breakdowns directly
-    from anomalies.json so the dashboard can merge them with Member 2's
-    approved/pending/rejected numbers.
+    analytics.json has no concept of anomalies (that's a separate anomaly
+    detection module). This computes state/district/severity/type
+    breakdowns directly from anomalies.json so the dashboard can merge them
+    with the data generation module's approved/pending/rejected numbers.
     """
     by_state = defaultdict(int)
     by_district = defaultdict(int)
@@ -157,7 +161,8 @@ st.divider()
 
 # ---------------------------------------------------------------------------
 # 2. State-wise / district-wise comparison tables
-#    (Member 2's stats merged with Member 3's anomaly counts)
+#    (data generation module's stats merged with anomaly detection module's
+#    counts)
 # ---------------------------------------------------------------------------
 
 def build_summary_rows(wise_dict, is_district, state_lookup=None):
@@ -177,7 +182,7 @@ def build_summary_rows(wise_dict, is_district, state_lookup=None):
 
 
 # map district -> state, needed because district_wise is keyed by district
-# name alone (Member 2's format)
+# name alone (the data generation module's format)
 district_to_state = {c["district"]: c["state"] for c in fra_data.get("claims", [])}
 
 state_rows = build_summary_rows(analytics["state_wise"], is_district=False)
@@ -256,7 +261,7 @@ with chart_col4:
         st.write("No anomalies to chart yet.")
 
 st.caption(f"Average processing time: **{overall['average_processing_time_days']} days** "
-           f"(across all approved claims, per Member 2's analytics).")
+           f"(across all approved claims, per the data generation module's analytics).")
 
 st.divider()
 
