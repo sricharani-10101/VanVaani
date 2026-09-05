@@ -1,4 +1,4 @@
-# FRA Anomaly Detection Engine — Member 3
+# FRA Anomaly Detection Engine — 
 
 **PS-7 — AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring**
 
