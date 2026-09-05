@@ -15,10 +15,10 @@ This information is available in disparate, difficult to analyse formats in a di
 
 •⁠  ⁠Insights on the implementation status of the FRA
 
-VanVaani offers a solution that consolidates data, analytics, mapping, anomaly detection and explanations via AI-based insights that can help improve decision-making and implementation of the FRA. 
+VanVaani offers a solution that consolidates data, analytics, mapping, anomaly detection and explanations via AI based insights that can help improve decision making and implementation of the FRA. 
 
 # 🎯 Objective
-The objective of developing VanVaani is to present simplified and interpretable information from complex data of FRA. Vanvaani helps to make the data of FRA speak by converting it into a form in which even a common man or a district officer can understand and take it seriously. It aims to convey the message of the FRA in a way that a claim record is understood more quickly, in a tenth of the time required previously. The objectives include:
+The objective of developing VanVaani is to present simplified and interpretable information from complex data of FRA. Vanvaani helps to make the data of FRA speak by converting it into a form in which even a common man or a district officer can understand and take it seriously. It aims to convey the message of the FRA in a way that a claim record is understood more quickly in a tenth of the time required previously. The objectives include:
 
 Visualizing the implementation of the FRA on an interactive map,
 
@@ -45,12 +45,12 @@ Below are the main ideas for building such a system:
 
 5.  Anomalies detection: The prototype will include a limited set of rule-based anomaly detection algorithm to automatically flag concerning claims.
 
-6.  Explanation: For each flagged claim, there should be an option to review it with an automatic explanation of why it was flagged.
+6.  Explanation: For each flagged claim there should be an option to review it with an automatic explanation of why it was flagged.
 
-7. Dashboard: Finally, the analysis results and visualization should be put together in a form of a dashboard that allows non-expert users to quickly grasp the situation with FRA claims in the region.
+7. Dashboard: Finally the analysis results and visualization should be put together in a form of a dashboard that allows non-expert users to quickly grasp the situation with FRA claims in the region.
 
 # 🧠 Decisions Made
-1. Clearly Labelled Simulated Data – Since machine-readable district-level FRA claim data is not readily available, we use self-generated data clearly labelled as (SIMULATED_DEMO_DATA) with visible demo disclaimers.
+1. Clearly Labelled Simulated Data – Since machine-readable district-level FRA claim data is not readily available we use self-generated data clearly labelled as (SIMULATED_DEMO_DATA) with visible demo disclaimers.
 
 2. Real Maps, Prototype Data – Real district boundaries are combined with simulated claim data to demonstrate a realistic working prototype with future potential for real data integration.
 
@@ -69,7 +69,7 @@ Below are the main ideas for building such a system:
 #  🗺️Features
 The application includes an Interactive WebGIS Map displaying FRA-related information
 🗺️ Users can navigate within the map area:
-zoom in/out, select districts, see relevant FRA information at a district level, assess risk level visually.
+zoom in or zoom out, select districts, see relevant FRA information at a district level, assess risk level visually.
 
 📊 FRA claim monitoring
 Keeping track of essential claim statistics such as total, approved, pending, or rejected claims.
@@ -95,7 +95,7 @@ Dev and collaboration tools: Visual Studio Code, Git, GitHub
 
 # ⚠️ Limitations
 VanVaani is currently developed as a prototype, so there are a few limitations. 
-1. Prototype Data- Current version of the system uses mock or self generated data where complete and structured FRA datasets are not publicly available. Therefore, the statistics displayed are for demonstration and should not be treated as official records.
+1. Prototype Data- Current version of the system uses mock or self generated data where complete and structured FRA datasets are not publicly available. Therefore the statistics displayed are for demonstration and should not be treated as official records.
 
 2. Limited geographic coverage- Current prototype is focused on select districts of Madhya Pradesh and is not yet available across the country.
 
