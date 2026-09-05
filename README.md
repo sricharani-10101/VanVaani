@@ -8,6 +8,8 @@ The program employs the use of data visualization and interactive dashboards to 
 
 In fact, the purpose of the project is to utilize technology for achieving more effective, transparent and accessible monitoring of forest rights while also improving management of forest rights and users of forest resources.
 
+## Link to our website- https://create-forest-rights-monitoring-mor5s1g7a-do-ra-raa.vercel.app  
+
 # 📌 Problem Statement
 The Forest Rights Act (FRA) mandates that people manage information about forest rights claims, approvals, rejections, pending applications and land records.
 
