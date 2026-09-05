@@ -1,4 +1,4 @@
-# FRA Decision Support Dashboard — Member 4
+# FRA Decision Support Dashboard — 
 
 **PS-7 — AI-powered Decision Support System for Forest Rights Act (FRA) Monitoring**
 
