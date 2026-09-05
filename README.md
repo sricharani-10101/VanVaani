@@ -3,6 +3,8 @@
 ### Introduction
 
 VanVaani  turns scattered Forest Rights Act paperwork into a living, interactive map. It auto-flags anomalies — delayed approvals, land-record mismatches, unusual rejection spikes — then uses AI to explain each flag in plain language, helping officers act faster, fairer, and with full transparency.
+
+
 Link to our project - https://create-forest-rights-monitoring-mor5s1g7a-do-ra-raa.vercel.app 
 
 # 📌 Problem Statement
