@@ -1,4 +1,4 @@
-# FRA Monitoring — Member 1: GIS / Map System
+# FRA Monitoring : GIS / Map System
 
 **Part of:** AI-Powered Decision Support System for Forest Rights Act (FRA) Monitoring
 **This module's job (PS-7 requirement):** an interactive WebGIS-style map of FRA claim data, by district, for Madhya Pradesh.
