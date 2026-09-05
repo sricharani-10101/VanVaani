@@ -68,22 +68,22 @@ Below are the main ideas for building such a system:
 
 #  🗺️Features
 The application includes an Interactive WebGIS Map displaying FRA-related information
-🗺️ Users can navigate within the map area:
+ Users can navigate within the map area:
 zoom in or zoom out, select districts, see relevant FRA information at a district level, assess risk level visually.
 
-📊 FRA claim monitoring
+ FRA claim monitoring
 Keeping track of essential claim statistics such as total, approved, pending, or rejected claims.
 
-🔍 Anomalies detection
+ Anomalies detection
 Automated detection of irregularities in claims processing, such as delayed claims, land record mismatches, inconsistent dates, unusual claim rejections or approvals.
 
-🚦 Risk-based visualization
+ Risk-based visualization
 Each district is colour coded according to its risk level 🟢 Low, 🔡 Medium, and 🔴 High Risk making it easy to see at a glance.
 
-🤖 Explainable AI
+ Explainable AI
 All detected anomalies have a simple description so that the user has an idea of what might be wrong in a particular claim or district.
 
-📈 Decision-making dashboard
+ Decision-making dashboard
 A dashboard view displaying fundamental FRA implementation insights including district statistics, performance indicators, anomalies detected, allows for quick assessment of the FRA implementation at a district level and detection of areas requiring attention.
 
 # ⚙️ Tools Used/ Techstach
