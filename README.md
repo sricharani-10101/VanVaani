@@ -2,13 +2,8 @@
 ## An AI-Powered Decision Support System for Forest Rights Act (FRA) Monitoring
 ### Introduction
 
-The Forest Rights Monitoring System is a technological device that was created to follow up on forest rights claims of those who rely on forest resources. It allows for more convenient and organized information storage which can be used for monitoring the status of claims and improving transparency of forest rights implementation. 
+##Vanvaani turns scattered Forest Rights Act paperwork into a living, interactive map. It auto-flags anomalies — delayed approvals, land-record mismatches, unusual rejection spikes — then uses AI to explain each flag in plain language, helping officers act faster, fairer, and with full transparency.
 
-The program employs the use of data visualization and interactive dashboards to convey pertinent information in an uncomplicated and digestible way. This allows relevant authorities to identify outstanding claims, conduct regional studies and facilitate the process of decision-making. 
-
-In fact, the purpose of the project is to utilize technology for achieving more effective, transparent and accessible monitoring of forest rights while also improving management of forest rights and users of forest resources.
-
-## Link to our website- https://create-forest-rights-monitoring-mor5s1g7a-do-ra-raa.vercel.app  
 
 # 📌 Problem Statement
 The Forest Rights Act (FRA) mandates that people manage information about forest rights claims, approvals, rejections, pending applications and land records.
