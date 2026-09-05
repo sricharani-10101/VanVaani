@@ -92,23 +92,23 @@ All detected anomalies have a simple description so that the user has an idea of
 A dashboard view displaying fundamental FRA implementation insights including district statistics, performance indicators, anomalies detected, allows for quick assessment of the FRA implementation at a district level and detection of areas requiring attention.
 
 # ⚙️ Tech stack:
-**Frontend & UI **
+**Frontend & UI**
 - HTML5, CSS3, vanilla JavaScript
 - Figma — design before code
 
-**Map **
+**Map**
 - Leaflet.js — interactive map library
 - GeoJSON — district boundary data
 
-**Data & Analytics **
+**Data & Analytics**
 - Python or JavaScript — to generate mock data and compute stats
 - Plain JSON files as the "database" — no real database needed
 
-**AI Anomaly Detection **
+**AI Anomaly Detection**
 - Rule-based logic (Python or JavaScript if/else checks) — for detecting delays, mismatches, date errors
 - A free LLM API (Groq, Gemini free tier, or similar) — only for turning a detected anomaly into a plain-language explanation
 
-**Dashboard & Charts **
+**Dashboard & Charts**
 - Chart.js — bar/line/pie charts
 - Vanilla JavaScript — reading and rendering `analytics.json`
 
