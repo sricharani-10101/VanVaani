@@ -1,7 +1,3 @@
-"""
-PS-7 FRA Monitoring — Member 3: AI Anomaly Detection Engine
-Consumes fra_data.json (Member 2's format) -> produces anomalies.json
-
 Usage:
     python anomaly_engine.py                        # uses fra_data.json if present
     python anomaly_engine.py --input path.json       # run on a specific file
@@ -10,8 +6,8 @@ Usage:
 
 No UI. No browser needed. Pure CLI.
 
-COMPATIBILITY NOTE (read this first):
-Member 2's real fra_data.json looks like this:
+COMPATIBILITY NOTE:
+the real fra_data.json looks like this:
     {
       "meta": {... project info, disclaimer, etc ...},
       "claims": [
@@ -33,11 +29,10 @@ This script reads that wrapped shape directly (data["claims"]). It also still
 accepts a plain flat list of claim dicts, so this file keeps working
 standalone if you ever get handed unwrapped data.
 
-There is no "land_record_area" field in the real data (that was a guess made
-before Member 2's actual generator existed). The rule that used to be called
+There is no "land_record_area" field in the real data. The rule that used to be called
 LAND_RECORD_MISMATCH is now LAND_FOREST_MISMATCH and compares land_area_hectares
 against forest_area_hectares instead — see check_land_forest_mismatch() below
-for the reasoning. Everything downstream (Member 4's dashboard) has been
+for the reasoning. Everything downstream has been
 updated to expect this new type name.
 """
 
@@ -46,10 +41,6 @@ import random
 import argparse
 import os
 from datetime import datetime, timedelta
-
-# ---------------------------------------------------------------------------
-# 0. CONFIG — agree on these once, don't change mid-build
-# ---------------------------------------------------------------------------
 
 RULE_WEIGHTS = {
     "DELAYED_CLAIM": 30,
@@ -90,12 +81,6 @@ STATUS_REJECTED = "Rejected"
 REQUIRED_FIELDS = ["claim_id", "state", "district", "claim_date", "status",
                    "land_area_hectares", "forest_area_hectares"]
 
-
-# ---------------------------------------------------------------------------
-# 1. LOADING — accepts Member 2's wrapped {"meta":..., "claims":[...]} shape,
-#    or a plain flat list, so this still works standalone.
-# ---------------------------------------------------------------------------
-
 def load_claims(path):
     with open(path) as f:
         data = json.load(f)
@@ -107,16 +92,10 @@ def load_claims(path):
         f"{path}: expected a claims list or a {{'meta':..., 'claims':[...]}} object"
     )
 
-
-# ---------------------------------------------------------------------------
-# 2. MOCK DATA GENERATOR (only used with --mock, e.g. if Member 2's file
-#    isn't ready yet — matches the real schema so the swap-in is seamless)
-# ---------------------------------------------------------------------------
-
 def generate_mock_data(n=25, seed=42):
     random.seed(seed)
     rows = []
-    today = datetime(2023, 12, 31)  # matches Member 2's real claim date range
+    today = datetime(2023, 12, 31) 
 
     for i in range(1, n + 1):
         district = random.choice(STATES_DISTRICTS["Madhya Pradesh"])
@@ -152,11 +131,6 @@ def generate_mock_data(n=25, seed=42):
 
     return rows
 
-
-# ---------------------------------------------------------------------------
-# 3. VALIDATION — never crash on bad rows, just skip + log
-# ---------------------------------------------------------------------------
-
 def validate_row(row):
     for field in REQUIRED_FIELDS:
         if field not in row or row[field] is None:
@@ -168,11 +142,6 @@ def validate_row(row):
     except (ValueError, TypeError):
         return False, "bad date format"
     return True, None
-
-
-# ---------------------------------------------------------------------------
-# 4. RULE ENGINE — rules decide IF something is anomalous
-# ---------------------------------------------------------------------------
 
 def check_delayed_claim(row, as_of):
     if row["status"] != STATUS_PENDING:
@@ -287,24 +256,12 @@ def run_rules(rows, as_of):
 
     return hits_by_claim
 
-
-# ---------------------------------------------------------------------------
-# 5. SCORING
-# ---------------------------------------------------------------------------
-
 def compute_score_and_severity(hits):
     score = min(100, sum(RULE_WEIGHTS.get(h["type"], 10) for h in hits))
     for low, high, label in SEVERITY_BANDS:
         if low <= score <= high:
             return score, label
     return score, "LOW"
-
-
-# ---------------------------------------------------------------------------
-# 6. EXPLANATION LAYER — LLM explains AFTER the rule engine has decided.
-#    Falls back to a template if no API key / network / rate limit — this
-#    keeps your demo alive even if a free LLM tier hiccups live.
-# ---------------------------------------------------------------------------
 
 TEMPLATE_EXPLANATIONS = {
     "DELAYED_CLAIM": "This claim has been pending significantly longer than the standard processing window. It may need administrative follow-up.",
@@ -355,11 +312,6 @@ def call_llm(claim_id, hits):
     """
     raise NotImplementedError
 
-
-# ---------------------------------------------------------------------------
-# 7. MAIN PIPELINE
-# ---------------------------------------------------------------------------
-
 def build_anomalies(rows, as_of, use_llm=False):
     valid_rows = []
     for row in rows:
@@ -395,14 +347,7 @@ def build_anomalies(rows, as_of, use_llm=False):
 
 
 def resolve_as_of_date(rows, override=None):
-    """
-    DELAYED_CLAIM needs a reference "today". Member 2's data is a static
-    historical snapshot (claim dates 2010-2023), so using the real wall-clock
-    date would flag almost every pending claim as delayed, every single
-    time this runs. Instead default to the latest date found in the dataset
-    itself (the effective "as of" date of this data snapshot), unless the
-    user passes --as-of explicitly.
-    """
+
     if override:
         return datetime.strptime(override, "%Y-%m-%d")
     latest = None
