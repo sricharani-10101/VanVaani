@@ -91,12 +91,66 @@ All detected anomalies have a simple description so that the user has an idea of
  Decision-making dashboard
 A dashboard view displaying fundamental FRA implementation insights including district statistics, performance indicators, anomalies detected, allows for quick assessment of the FRA implementation at a district level and detection of areas requiring attention.
 
-# ⚙️ Tools Used/ Techstach
-Back end and data: Python, Flask, Pandas, JSON
-Front end: HTML, CSS, JavaScript
-Mapping: Leaflet.js, GeoJSON, OpenStreetMap
-Anomaly detection: Rules/statistical tests, AI(LLM) for explanations
-Dev and collaboration tools: Visual Studio Code, Git, GitHub
+# ⚙️ Tech stack:
+**Frontend & UI **
+- HTML5, CSS3, vanilla JavaScript
+- Figma — design before code
+
+**Map **
+- Leaflet.js — interactive map library
+- GeoJSON — district boundary data
+
+**Data & Analytics **
+- Python or JavaScript — to generate mock data and compute stats
+- Plain JSON files as the "database" — no real database needed
+
+**AI Anomaly Detection **
+- Rule-based logic (Python or JavaScript if/else checks) — for detecting delays, mismatches, date errors
+- A free LLM API (Groq, Gemini free tier, or similar) — only for turning a detected anomaly into a plain-language explanation
+
+**Dashboard & Charts **
+- Chart.js — bar/line/pie charts
+- Vanilla JavaScript — reading and rendering `analytics.json`
+
+**Shared across everyone**
+- No backend server required — everything runs as static files reading local JSON
+- GitHub — shared repo so everyone pushes into the same folder structure
+- GitHub Pages or Netlify — free hosting for the final demo
+
+# Combined Project Structure
+vanvaani/
+│
+├── index.html                 → Login page                    
+├── home.html                  → Home / welcome page            
+├── monitoring.html            → Main dashboard page            
+├── anomalies.html             → Anomaly list page              
+├── claim.html                 → Claim details page             
+│
+├── css/
+│   └── style.css              → Shared stylesheet, all pages   
+│
+├── js/
+│   ├── map.js                 → Leaflet map logic               
+│   ├── monitoring.js          → District click → detail panel  
+│   ├── dashboard.js           → Charts + KPI rendering          
+│   ├── anomalies.js           → Renders anomaly cards           
+│   └── claim.js               → Renders one claim + AI text     
+│
+├── data/
+│   ├── fra_data.json          → Raw claim records (~500)      
+│   ├── analytics.json         → State/district statistics      
+│   └── anomalies.json         → Flagged claims + AI explanation
+│
+├── ai/
+│   ├── anomaly_rules.py       → Rule engine (delay, mismatch,  
+│   │                             date error, rejection spike)
+│   └── explain.py             → Calls LLM, writes anomalies.json
+│
+├── assets/
+│   ├── logo.png
+│   └── district-boundaries.geojson   → Map shape data           
+│
+└── README.md                  → Setup + demo instructions
 
 # ⚠️ Limitations
 VanVaani is currently developed as a prototype, so there are a few limitations. 
